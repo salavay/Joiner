@@ -37,10 +37,16 @@ async function register(req, res) {
 
         const {email, password, username} = req.body;
 
-        const candidate = await User.findOne({username});
+        const candidateByName = await User.findOne({username});
 
-        if (candidate) {
-            res.status(400).json({message: "User already exist"});
+        if (candidateByName) {
+            return res.status(400).json({message: "This username is already taken"});
+        }
+
+        const candidateByEmail = await User.findOne({email});
+
+        if (candidateByEmail) {
+            return res.status(400).json({message: "This email is already in use"});
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
