@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="71" height="40" fill="none" viewBox="0 0 71 40">
+  <g clip-path="url(#a)">
+    <rect width="70" height="40" x=".5" fill="url(#b)" rx="20"/>
+    <path fill="#fff" fill-rule="evenodd" d="M36.115 12h-1.23v7.385H27.5v1.23h7.385V28h1.23v-7.385H43.5v-1.23h-7.385V12Z" clip-rule="evenodd"/>
+  </g>
+  <defs>
+    <linearGradient id="b" x1="49.759" x2="39.46" y1="0" y2="44.241" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF00D6"/>
+      <stop offset="1" stop-color="#FF4D00"/>
+    </linearGradient>
+    <clipPath id="a">
+      <path fill="#fff" d="M0 0h70v40H0z" transform="translate(.5)"/>
+    </clipPath>
+  </defs>
+</svg>

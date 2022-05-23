@@ -1,13 +1,21 @@
 const express = require('express')
+const cors = require('cors')
 const config = require('config')
 const mongoose = require("mongoose");
+
+const corsOptions = {
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204
+}
 
 const app = express()
 
 const PORT = config.get("port") || 5000
 
-app.use(express.json({ extended: true }))
-
+app.use(express.json({ extended: true }));
+app.use(cors(corsOptions));
 app.use('/api/auth', require("./routes/auth.routes"));
 
 async function start() {

@@ -12,7 +12,7 @@ const router = Router();
 router.post('/register',
     [
         check('email', 'Email is incorrect').isEmail(),
-        check('password', 'Password should be 8 characters at least').isLength({min: 8})
+        check('password', 'Password should be 8 characters at least').isLength({min: 4})
     ],
     register);
 
@@ -22,6 +22,10 @@ router.post('/login',
         check('password', 'Password should be exist').exists()
     ],
     login);
+
+router.get('/check', (req, res) => {
+    res.status(200).json({message: 'Checked!'});
+})
 
 
 async function register(req, res) {
