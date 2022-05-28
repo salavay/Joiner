@@ -13,10 +13,7 @@ function ProfilePage({navigation}) {
             <CustomButton backgroundColor={'#000000'}
                           text={'LOGOUT'}
                           color={'#FFFFFF'}
-                          onPress={() => {
-                              logout();
-                              navigation.navigate('LoginTabNav');
-                          }}
+                          onPress={logout}
                           activeOpacity={0.8}
             />
         </View>
