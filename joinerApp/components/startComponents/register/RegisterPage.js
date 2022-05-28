@@ -35,7 +35,7 @@ function RegisterPage({navigation}) {
                          onChange={changeHandler} name={'email'}
             />
             <CustomInput style={styles.input}
-                         placeholder={"Some text"} label={'Password'} secure={true}
+                         placeholder={"Some text"} label={'Password'} secureTextEntry={true}
                          onChange={changeHandler} name={'password'}/>
             <CustomButton backgroundColor={'#000000'}
                           text={'Register'}

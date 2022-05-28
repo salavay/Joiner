@@ -20,20 +20,18 @@ function StartPage({navigation}) {
                 </ImageBackground>
             </ImageBackground>
             <View style={styles.buttonsWrapper}>
-                <CustomButton backgroundColor={'#000000'}
-                              text={'LOG IN'}
-                              color={'#FFFFFF'}
+                <CustomButton text={'LOG IN'}
                               onPress={() => {
                                   navigation.navigate('Login')
                               }}
-                              activeOpacity={0.8}
                 />
                 <CustomButton backgroundColor={'#FFFFFF'}
                               text={'REGISTER'}
                               color={'#000000'}
                               onPress={() => {
                                   navigation.navigate('Register')
-                              }}/>
+                              }}
+                              activeOpacity={0.4}/>
             </View>
         </View>
     );

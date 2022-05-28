@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, TextInput, StyleSheet, Text} from 'react-native'
 
-function CustomInput({placeholder, label, style, onChange, secure=false, name}) {
+function CustomInput({placeholder, label, style, onChange, name, ...inputProps}) {
     const [text, setText] = useState(null);
 
     const onChangeHandler = (text) => {
@@ -12,7 +12,7 @@ function CustomInput({placeholder, label, style, onChange, secure=false, name}) 
         <View style={style}>
             {label ? <Text style={styles.label}>{label}</Text> : null}
             <View style={styles.inputWrapper}>
-                <TextInput placeholder={placeholder} secureTextEntry={secure} onChangeText={onChangeHandler}/>
+                <TextInput placeholder={placeholder} onChangeText={onChangeHandler} {...inputProps}/>
             </View>
         </View>
     );
@@ -28,11 +28,12 @@ const styles = StyleSheet.create({
         },
         inputWrapper: {
             borderRadius: 16,
-            height: 40,
+            height: 50,
             width: '100%',
             backgroundColor: '#dadada',
             justifyContent: "center",
-            padding: 10
+            paddingHorizontal: 10,
+            paddingVertical: 5
         }
     }
 )

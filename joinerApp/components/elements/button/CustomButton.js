@@ -1,10 +1,10 @@
 import React from 'react';
 import {TouchableOpacity, Text, StyleSheet} from 'react-native'
 
-function CustomButton({backgroundColor,
+function CustomButton({backgroundColor='#000000',
                           text,
-                          color,
-                          activeOpacity=0.4,
+                          color='#FFFFFF',
+                          activeOpacity=0.8,
                           onPress,
                           height=50, width=150}) {
     const styles = StyleSheet.create({

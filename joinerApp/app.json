@@ -18,9 +18,15 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSMicrophoneUsageDescription":  "Joiner wants to use your mic",
+        "NSPhotoLibraryUsageDescription":  "Joiner wants to use your photos",
+        "NSCameraUsageDescription": "Joiner wants to use your camera"
+      }
     },
     "android": {
+      "permissions": ["ACCESS_FINE_LOCATION", "CAMERA", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -28,6 +34,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Joiner accesses your photos to let you share them."
+        }
+      ]
+    ]
   }
 }

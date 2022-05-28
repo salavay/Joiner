@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, Text} from 'react-native'
-import {NavigationContainer} from "@react-navigation/native";
+import {StyleSheet, Text, View} from 'react-native'
+import {getFocusedRouteNameFromRoute, NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import RegisterPage from "../startComponents/register/RegisterPage";
 import StartPage from "../startComponents/start/StartPage";
@@ -12,49 +12,67 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import SearchPage from "../mainComponents/search/SearchPage";
 import ChatsPage from "../mainComponents/chats/ChatsPage";
 import ProfilePage from "../mainComponents/profile/ProfilePage";
-import CreatePage from "../mainComponents/create/CreatePage";
-import HomeSVG  from '../../assets/svg/Toolbar_icon_home.svg';
-import ProfileSVG  from '../../assets/svg/Toolbar_icon_profile.svg';
-import ChatsSVG  from '../../assets/svg/Toolbar_icon_chats.svg';
-import SearchSVG  from '../../assets/svg/Toolbar_icon_search.svg';
-import CreateSVG  from '../../assets/svg/Toolbar_icon_create.svg';
+import HomeSVG from '../../assets/svg/Toolbar_icon_home.svg';
+import ProfileSVG from '../../assets/svg/Toolbar_icon_profile.svg';
+import ChatsSVG from '../../assets/svg/Toolbar_icon_chats.svg';
+import SearchSVG from '../../assets/svg/Toolbar_icon_search.svg';
+import CreateSVG from '../../assets/svg/Toolbar_icon_create.svg';
+import CreateNavigation, {} from "../mainComponents/create/CreateNavigation";
 
 function Navigation(props) {
     const Stack = createNativeStackNavigator();
     const Tab = createBottomTabNavigator();
 
+    const iconProps = {
+        height: 50,
+        width: 50
+    }
+
     function TabNavigation() {
         return (
-            <Tab.Navigator screenOptions={({route}) => ({
-                tabBarStyle: { height: 80 },
-                headerShown: false,
-                ...tabBarOptions(route),
+            <View style={{flex: 1}}>
 
-            })}>
-                <Tab.Screen name={'Home'} component={HomePage}/>
-                <Tab.Screen name={'Search'} component={SearchPage}/>
-                <Tab.Screen name={'Create'} component={CreatePage}/>
-                <Tab.Screen name={'Chats'} component={ChatsPage}/>
-                <Tab.Screen name={'Profile'} component={ProfilePage}/>
-                <Tab.Screen name={'LoginTabNav'} component={StackNavigation}
-                options={{
-                    tabBarVisible: false,
-                    tabBarButton: () => null
-                }}/>
-            </Tab.Navigator>
+                <Tab.Navigator screenOptions={({route}) => ({
+                    tabBarStyle: {height: 80},
+                    headerShown: false,
+                    ...tabBarOptions(route)
+                })}>
+                    <Tab.Screen name={'Home'} component={HomePage}/>
+                    <Tab.Screen name={'Search'} component={SearchPage}/>
+                    <Tab.Screen name={'Create'}
+                                component={CreateNavigation}
+                    />
+                    <Tab.Screen name={'Chats'} component={ChatsPage}/>
+                    <Tab.Screen name={'Profile'} component={ProfilePage}/>
+                    <Tab.Screen name={'LoginTabNav'} component={StackNavigation}
+                                options={{
+                                    tabBarVisible: false,
+                                    tabBarButton: () => null
+                                }}/>
+                </Tab.Navigator>
+            </View>
         )
     }
+
     const tabBarOptions = (route) => {
+
         switch (route.name) {
             case 'Home':
                 return {
-                    tabBarIcon: () => <HomeSVG/>,
+                    tabBarIcon: () => <HomeSVG {...iconProps}/>,
                     tabBarLabel: () => null,
                 }
             case 'Search':
                 return {
-                    tabBarIcon: () => <SearchSVG/>,
+                    tabBarIcon: () => <SearchSVG {...iconProps}/>,
                     tabBarLabel: () => null,
+                    tabBarStyle: {
+                        backgroundColor: 'transparent',
+                        position: 'absolute',
+                        height: 80,
+                        bottom: 0,
+                        elevation: 0
+                    }
                 }
             case 'Create':
                 return {
@@ -63,12 +81,12 @@ function Navigation(props) {
                 }
             case 'Profile':
                 return {
-                    tabBarIcon: () => <ProfileSVG/>,
+                    tabBarIcon: () => <ProfileSVG {...iconProps}/>,
                     tabBarLabel: () => null,
                 }
             case 'Chats':
                 return {
-                    tabBarIcon: () => <ChatsSVG/>,
+                    tabBarIcon: () => <ChatsSVG {...iconProps}/>,
                     tabBarLabel: () => null,
                 }
         }
@@ -111,7 +129,5 @@ function Navigation(props) {
 export default Navigation;
 
 const styles = StyleSheet.create({
-    highlightedIcon: {
-
-    }
+    highlightedIcon: {},
 });

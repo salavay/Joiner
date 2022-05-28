@@ -32,7 +32,7 @@ function LoginPage({navigation}) {
                          onChange={changeHandler} name={'userNameOrEmail'}
             />
             <CustomInput style={styles.input}
-                         placeholder={"Some text"} label={'Password'} secure={true}
+                         placeholder={"Some text"} label={'Password'} secureTextEntry={true}
                          onChange={changeHandler} name={'password'}/>
             <CustomButton backgroundColor={'#000000'}
                           text={'Log in'}
