@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native'
+import {Platform, StyleSheet, Text, View} from 'react-native'
 import {getFocusedRouteNameFromRoute, NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import RegisterPage from "../startComponents/register/RegisterPage";
@@ -12,28 +12,31 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import SearchPage from "../mainComponents/search/SearchPage";
 import ChatsPage from "../mainComponents/chats/ChatsPage";
 import ProfilePage from "../mainComponents/profile/ProfilePage";
-import HomeSVG from '../../assets/svg/Toolbar_icon_home.svg';
-import ProfileSVG from '../../assets/svg/Toolbar_icon_profile.svg';
-import ChatsSVG from '../../assets/svg/Toolbar_icon_chats.svg';
-import SearchSVG from '../../assets/svg/Toolbar_icon_search.svg';
-import CreateSVG from '../../assets/svg/Toolbar_icon_create.svg';
+import HomeSVG from '../../assets/svg/toolbar/Toolbar_icon_home.svg';
+import ProfileSVG from '../../assets/svg/toolbar/Toolbar_icon_profile.svg';
+import ChatsSVG from '../../assets/svg/toolbar/Toolbar_icon_chats.svg';
+import SearchSVG from '../../assets/svg/toolbar/Toolbar_icon_search.svg';
+import CreateSVG from '../../assets/svg/toolbar/Toolbar_icon_create.svg';
 import CreateNavigation, {} from "../mainComponents/create/CreateNavigation";
+import IntroPage from "../startComponents/intro/IntroPage";
+import {SafeAreaView} from "react-native-safe-area-context";
+
+export const TAB_BAR_HEIGHT = Platform.OS === 'ios' ? 80 : 60;
 
 function Navigation(props) {
     const Stack = createNativeStackNavigator();
     const Tab = createBottomTabNavigator();
 
     const iconProps = {
-        height: 50,
-        width: 50
+        height: 25,
+        width: 25
     }
 
     function TabNavigation() {
         return (
-            <View style={{flex: 1}}>
-
+            <SafeAreaView style={{flex: 1}} edges={['right', 'left', 'top']}>
                 <Tab.Navigator screenOptions={({route}) => ({
-                    tabBarStyle: {height: 80},
+                    tabBarStyle: {height: TAB_BAR_HEIGHT},
                     headerShown: false,
                     ...tabBarOptions(route)
                 })}>
@@ -50,7 +53,7 @@ function Navigation(props) {
                                     tabBarButton: () => null
                                 }}/>
                 </Tab.Navigator>
-            </View>
+            </SafeAreaView>
         )
     }
 
@@ -69,14 +72,15 @@ function Navigation(props) {
                     tabBarStyle: {
                         backgroundColor: 'transparent',
                         position: 'absolute',
-                        height: 80,
+                        height: TAB_BAR_HEIGHT,
                         bottom: 0,
-                        elevation: 0
+                        elevation: 0,
+                        borderTopWidth: 0,
                     }
                 }
             case 'Create':
                 return {
-                    tabBarIcon: () => <CreateSVG/>,
+                    tabBarIcon: () => <CreateSVG {...iconProps}/>,
                     tabBarLabel: () => null,
                 }
             case 'Profile':
@@ -96,6 +100,7 @@ function Navigation(props) {
     function StackNavigation() {
         return (
             <Stack.Navigator screenOptions={{headerShown: false}}>
+                <Stack.Screen name={"Intro"} component={IntroPage}/>
                 <Stack.Screen name={"Start"} component={StartPage}/>
                 <Stack.Screen name={"Register"}
                               component={RegisterPage}
@@ -119,7 +124,7 @@ function Navigation(props) {
             token, login, logout, userId, isAuthenticated
         }}>
             <NavigationContainer>
-                {!isAuthenticated ? <StackNavigation/> : <TabNavigation/>}
+                <StackNavigation/>
             </NavigationContainer>
         </AuthContext.Provider>
 
