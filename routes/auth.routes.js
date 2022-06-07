@@ -57,6 +57,7 @@ async function register(req, res) {
         const user = new User({username, email, password: hashedPassword});
 
         await user.save();
+        console.log('REGISTERED')
 
         res.status(201).json({message: 'Created user'});
 

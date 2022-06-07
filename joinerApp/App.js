@@ -5,12 +5,14 @@ import {
     Comfortaa_400Regular,
     Raleway_600SemiBold,
     Raleway_700Bold,
-    Raleway_400Regular
+    Raleway_400Regular,
+    Raleway_300Light
 } from "@expo-google-fonts/dev";
 import Navigation from "./components/navigation/Navigation";
+import {SafeAreaProvider} from "react-native-safe-area-context";
 
 export default function App() {
-    const [fonts] = useFonts({Comfortaa_700Bold, Raleway_700Bold, Raleway_600SemiBold, Raleway_400Regular});
+    const [fonts] = useFonts({Comfortaa_700Bold, Raleway_700Bold, Raleway_600SemiBold, Raleway_400Regular, Raleway_300Light});
 
     if (!fonts) {
         return (
@@ -22,15 +24,12 @@ export default function App() {
         )
     }
     return (
-            <View style={styles.container}>
-                <Navigation/>
-            </View>
+        <SafeAreaProvider>
+            <Navigation/>
+        </SafeAreaProvider>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        fontFamily: "Comfortaa_700Bold"
-    },
+
 });

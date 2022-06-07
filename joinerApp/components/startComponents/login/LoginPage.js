@@ -17,7 +17,7 @@ function LoginPage({navigation}) {
 
     const loginHandler = async () => {
         try {
-            const data = await request('http://192.168.31.20:5000/api/auth/login', 'POST', {...form});
+            const data = await request('/api/auth/login', 'POST', {...form});
             auth.login(data.token, data.userId);
             navigation.navigate('HomeStackNav');
         } catch (e) {
@@ -26,7 +26,7 @@ function LoginPage({navigation}) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Register</Text>
+            <Text style={styles.title}>Log in</Text>
             <CustomInput style={styles.input}
                          label={'Username or Email'}
                          onChange={changeHandler} name={'userNameOrEmail'}

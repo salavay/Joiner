@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     imageContainer: {
-        height: 30,
-        width: 30,
+        height: 25,
+        width: 25,
         marginRight: 10
     },
     username: {

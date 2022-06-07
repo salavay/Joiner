@@ -3,6 +3,7 @@ import {View, Text, Platform} from 'react-native';
 import {commonStyle} from "../../../assets/style/common";
 import MapView, {Marker} from 'react-native-maps';
 import {BlurView} from "expo-blur";
+import {TAB_BAR_HEIGHT} from "../../navigation/Navigation";
 
 
 function SearchPage(props) {
@@ -28,7 +29,7 @@ function SearchPage(props) {
                     position: 'absolute',
                     bottom: 0,
                     width: '100%',
-                    height: 80,
+                    height: TAB_BAR_HEIGHT,
                 }}
                 tint="light"
                 intensity={Platform.OS === 'ios' ? 30 : 100}

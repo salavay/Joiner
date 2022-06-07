@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, ImageBackground, StyleSheet, Pressable, Image, Platform, ActionSheetIOS} from 'react-native';
+import {View, Text, StyleSheet, Pressable, Platform, ActionSheetIOS} from 'react-native';
 import {commonStyle} from "../../../assets/style/common"
 import CustomButton from "../../elements/button/CustomButton";
 import CustomInput from "../../elements/input/CustomInput";
@@ -13,7 +13,7 @@ function CreateFirstPage({navigation}) {
     const initState = {
         name: '',
         date: new Date(),
-        segment: {name: 'Default', value: 'default'},
+        segment: segments[0],
         capacity: '',
         price: ''
     }
@@ -67,8 +67,11 @@ function CreateFirstPage({navigation}) {
 
     return (
         <View style={commonStyle.paddedContainer}>
+            <View style={styles.titlesWrapper}>
+                <Text style={styles.title}>Event Creation</Text>
+                <Text style={styles.titleAdditional}>Please enter event details</Text>
+            </View>
             <View style={styles.section}>
-                <Text style={styles.label}>Name</Text>
                 <CustomInput name={'name'} placeholder={'Event name'} onChange={onChangeHandler}></CustomInput>
             </View>
             <View style={styles.section}>
@@ -76,7 +79,6 @@ function CreateFirstPage({navigation}) {
                 {Platform.OS === 'ios' ? iosDatePickers : androidDatePickers}
             </View>
             <View style={styles.section}>
-                <Text style={styles.label}>Segment</Text>
                 {Platform.OS === 'ios' ?
                     <Pressable onPress={() => {
                         ActionSheetIOS.showActionSheetWithOptions(
@@ -93,16 +95,20 @@ function CreateFirstPage({navigation}) {
                         </View>
                     </Pressable>
                     :
-                    <Picker onValueChange={(value, index) => onChangeHandler('segment', segments[index])}>
-                        {segments.map(segment =>
-                            (<Picker.Item key={segment.value} label={segment.name} value={segment.value}/>)
-                        )}
-                    </Picker>
+                    <View style={styles.androidSegmentPicker}>
+                        <Picker selectedValue={state.segment.value}
+                                onValueChange={(value, index) => onChangeHandler('segment', segments[index])}
+                        >
+                            {segments.map(segment =>
+                                (<Picker.Item key={segment.value} label={segment.name} value={segment.value}/>)
+                            )}
+                        </Picker>
+                    </View>
                 }
             </View>
             <View style={styles.section}>
-                <View>
-                    <View>
+                <View style={styles.priceAndCapacityWrapper}>
+                    <View style={styles.priceOrCapacity}>
                         <Text style={styles.label}>Capacity</Text>
                         <CustomInput placeholder={'10'}
                                      keyboardType={'numeric'}
@@ -110,7 +116,7 @@ function CreateFirstPage({navigation}) {
                                      onChange={onChangeHandler}
                         />
                     </View>
-                    <View>
+                    <View style={styles.priceOrCapacity}>
                         <Text style={styles.label}>Price</Text>
                         <CustomInput placeholder={'Free'}
                                      keyboardType={'numeric'}
@@ -120,13 +126,22 @@ function CreateFirstPage({navigation}) {
                     </View>
                 </View>
             </View>
+            <View style={styles.bottomButtonsWrapper}>
+                <CustomButton backgroundColor={'#000000'}
+                              text={'Cancel'}
+                              color={'#F2F2F2'}
+                              onPress={() => navigation.navigate('CreateSecondPage')}
+                              activeOpacity={0.8}
+                />
+                <CustomButton backgroundColor={'#AF9CFF'}
+                              text={'Next'}
+                              color={'#000'}
+                              onPress={() => navigation.navigate('CreateSecondPage')}
+                              activeOpacity={0.8}
+                />
+            </View>
 
-            <CustomButton backgroundColor={'#000000'}
-                          text={'NEXT'}
-                          color={'#FFFFFF'}
-                          onPress={() => navigation.navigate('CreateSecondPage')}
-                          activeOpacity={0.8}
-            />
+
         </View>
     );
 }
@@ -134,6 +149,23 @@ function CreateFirstPage({navigation}) {
 export default CreateFirstPage;
 
 const styles = StyleSheet.create({
+    titlesWrapper: {
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 30,
+        marginTop: 20
+    },
+    title: {
+        fontSize: 35,
+        fontFamily: 'Raleway_700Bold',
+        marginBottom: 10
+    },
+    titleAdditional: {
+        fontSize: 18,
+        fontFamily: 'Raleway_300Light',
+        color: '#7A7A7A'
+    },
     label: {
         fontFamily: "Raleway_400Regular",
         fontSize: 20,
@@ -152,9 +184,8 @@ const styles = StyleSheet.create({
     },
     androidDateText: {
         fontFamily: "Raleway_400Regular",
-        padding: 5,
         justifyContent: "center",
-        fontSize: 20,
+        fontSize: 18,
     },
     iosSegmentPickerWrapper: {
         borderRadius: 16,
@@ -165,15 +196,32 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 5
     },
+    androidSegmentPicker: {
+        borderRadius: 16,
+        height: 50,
+        width: '100%',
+        backgroundColor: '#dadada',
+        justifyContent: "center",
+        paddingHorizontal: 10,
+        paddingVertical: 5
+    },
     priceAndCapacityWrapper: {
-        flexDirection: "row"
+        flexDirection: "row",
+        justifyContent: "space-between"
     },
     priceOrCapacity: {
-        flex: 1
+        width: '48%'
+    },
+    bottomButtonsWrapper: {
+        marginTop: 'auto',
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginBottom: 20
     }
 })
 
 const segments = [
+    {value: 'default', name: 'Default'},
     {value: 'sport', name: 'Sports'},
     {value: 'standup', name: 'Stand-Up'},
     {value: 'hike', name: 'Hike'},
