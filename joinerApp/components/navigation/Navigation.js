@@ -1,6 +1,6 @@
 import React from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native'
-import {getFocusedRouteNameFromRoute, NavigationContainer} from "@react-navigation/native";
+import {StyleSheet} from 'react-native'
+import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import RegisterPage from "../startComponents/register/RegisterPage";
 import StartPage from "../startComponents/start/StartPage";
@@ -20,8 +20,8 @@ import CreateSVG from '../../assets/svg/toolbar/Toolbar_icon_create.svg';
 import CreateNavigation, {} from "../mainComponents/create/CreateNavigation";
 import IntroPage from "../startComponents/intro/IntroPage";
 import {SafeAreaView} from "react-native-safe-area-context";
+import {TAB_BAR_HEIGHT} from "../Constants";
 
-export const TAB_BAR_HEIGHT = Platform.OS === 'ios' ? 80 : 60;
 
 function Navigation(props) {
     const Stack = createNativeStackNavigator();
@@ -38,6 +38,7 @@ function Navigation(props) {
                 <Tab.Navigator screenOptions={({route}) => ({
                     tabBarStyle: {height: TAB_BAR_HEIGHT},
                     headerShown: false,
+                    tabBarHideOnKeyboard: true,
                     ...tabBarOptions(route)
                 })}>
                     <Tab.Screen name={'Home'} component={HomePage}/>

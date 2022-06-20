@@ -17,7 +17,11 @@ function LoginPage({navigation}) {
 
     const loginHandler = async () => {
         try {
-            const data = await request('/api/auth/login', 'POST', {...form});
+            const data = await request({
+                url: '/api/auth/login',
+                method: 'POST',
+                body: {...form}
+            });
             auth.login(data.token, data.userId);
             navigation.navigate('HomeStackNav');
         } catch (e) {
@@ -49,7 +53,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         padding: 10,
         marginTop: 40,
-        flex:1,
+        flex: 1,
     },
     title: {
         fontFamily: "Comfortaa_700Bold",

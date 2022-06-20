@@ -1,9 +1,8 @@
 import React from 'react';
 import {View, Text, Platform} from 'react-native';
-import {commonStyle} from "../../../assets/style/common";
 import MapView, {Marker} from 'react-native-maps';
 import {BlurView} from "expo-blur";
-import {TAB_BAR_HEIGHT} from "../../navigation/Navigation";
+import {TAB_BAR_HEIGHT} from "../../Constants";
 
 
 function SearchPage(props) {

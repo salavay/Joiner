@@ -7,13 +7,13 @@ function CustomButton({
                           color = '#FFFFFF',
                           activeOpacity = 0.8,
                           onPress,
-                          height = 50, width = 150,
-                          outlined = false
+                          outlined = false,
+                          style
                       }) {
     const styles = StyleSheet.create({
         button: {
-            width: width,
-            height: height,
+            width: 150,
+            height: 50,
 
             alignItems: "center",
             justifyContent: "center",
@@ -24,7 +24,7 @@ function CustomButton({
         },
         buttonText: {
             fontWeight: "700"
-        }
+        },
     });
 
     return (
@@ -33,7 +33,8 @@ function CustomButton({
                 styles.button,
                 outlined ? {
                     borderWidth: 2
-                } : {}]}
+                } : {},
+                style]}
             activeOpacity={activeOpacity}
             onPress={onPress}>
             <Text style={{...styles.buttonText, color}}>
