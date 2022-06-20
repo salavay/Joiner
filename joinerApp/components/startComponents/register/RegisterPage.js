@@ -17,7 +17,11 @@ function RegisterPage({navigation}) {
 
     const registerHandler = async () => {
         try {
-            const data = await request('/api/auth/register', 'POST', {...form});
+            const data = await request({
+                url: '/api/auth/register',
+                method: 'POST',
+                body: {...form}
+            });
             navigation.navigate('Login');
         } catch (e) {
         }
@@ -52,7 +56,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         padding: 10,
         marginTop: 40,
-        flex:1,
+        flex: 1,
     },
     title: {
         fontFamily: "Comfortaa_700Bold",

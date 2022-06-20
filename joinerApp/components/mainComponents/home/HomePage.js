@@ -6,7 +6,7 @@ import {SafeAreaView} from "react-native-safe-area-context";
 
 function HomePage(props) {
     return (
-        <SafeAreaView style={commonStyle.safeAreaWithTabNavigator} edges={['right', 'left', 'top']}>
+        <SafeAreaView style={commonStyle.safeAreaWithTabNavigator} edges={['right', 'left']}>
             <ScrollView style={commonStyle.paddedContainer}>
                 <MeetCard style={styles.card}/>
                 <MeetCard style={styles.card}/>
