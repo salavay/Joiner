@@ -5,12 +5,12 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "server": "nodemon app.js",
+    "server": "../node_modules/.bin/nodemon app.js",
     "client": "npm run start --prefix client",
-    "app": "npm run start --prefix joinerApp",
-    "devApp": "concurrently --raw \"npm run server\" \"npm run app\"",
-    "dev": "concurrently --raw \"npm run server\" \"npm run client\"",
-    "debug": "nodemon --inspect app.js"
+    "app": "npm run start --prefix ../joinerApp",
+    "devApp": "../node_modules/.bin/concurrently --raw \\\"npm run server\\\" \\\"npm run app\\\"",
+    "dev": "../node_modules/.bin/concurrently --raw \\\"npm run server\\\" \\\"npm run client\\\"",
+    "debug": "../node_modules/.bin/nodemon --inspect app.js"
   },
   "keywords": [
     "Joiner",
