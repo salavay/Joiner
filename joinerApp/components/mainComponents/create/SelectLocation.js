@@ -1,25 +1,22 @@
 import React, {useContext, useState} from 'react';
-import {StyleSheet, View, Text, ActivityIndicator} from 'react-native'
-import MapView, {Marker} from "react-native-maps";
+import {ActivityIndicator, StyleSheet, Text, View} from 'react-native'
+import MapView from "react-native-maps";
 import MapPinSVG from '../../../assets/svg/MapPin.svg';
 import {useHttp} from "../../../hooks/http.hook";
 import {debounce} from 'debounce';
 import {MeetFormContext} from "./MeetFormContext";
 import CustomButton from "../../elements/button/CustomButton";
 import {theme} from "../../../context/ThemeContext";
+import {mapPreviewDeltas} from "../../Constants";
 
 
 function SelectLocation({navigation}) {
 
-    const coordDeltas = {
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421
-    }
-
     const {
+        meetForm, setMeetForm,
         address, setAddress,
         setPickedLocation,
-        setLocationPicked
+        setLocationPicked, pickedLocation
     } = useContext(MeetFormContext);
 
     const {request} = useHttp();
@@ -53,6 +50,11 @@ function SelectLocation({navigation}) {
                     latitudeDelta,
                     longitudeDelta
                 });
+                setMeetForm({
+                    ...meetForm,
+                    latitude,
+                    longitude
+                })
                 setLocationPicked(true);
                 setChangingRegion(false);
             }
@@ -68,9 +70,8 @@ function SelectLocation({navigation}) {
         <View style={{flex: 1, position: 'relative'}}>
             <MapView style={{flex: 1, zIndex: -1}}
                      initialRegion={{
-                         latitude: 59.963027597305164,
-                         longitude: 30.305648291679912,
-                         ...coordDeltas
+                         ...pickedLocation,
+                         ...mapPreviewDeltas
                      }}
                      onRegionChange={onRegionChange}
                      onRegionChangeComplete={onRegionComplete}

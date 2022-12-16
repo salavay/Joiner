@@ -1,5 +1,5 @@
-import React, {useCallback, useContext, useEffect} from 'react';
-import {View, Text, StyleSheet, ImageBackground} from "react-native";
+import React from 'react';
+import {ImageBackground, StyleSheet, Text, View} from "react-native";
 import CustomButton from "../../elements/button/CustomButton";
 
 

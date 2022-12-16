@@ -17,10 +17,13 @@ import ProfileSVG from '../../assets/svg/toolbar/Toolbar_icon_profile.svg';
 import ChatsSVG from '../../assets/svg/toolbar/Toolbar_icon_chats.svg';
 import SearchSVG from '../../assets/svg/toolbar/Toolbar_icon_search.svg';
 import CreateSVG from '../../assets/svg/toolbar/Toolbar_icon_create.svg';
-import CreateNavigation, {} from "../mainComponents/create/CreateNavigation";
+import CreateRootPage from "../mainComponents/create/CreateRootPage";
 import IntroPage from "../startComponents/intro/IntroPage";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {TAB_BAR_HEIGHT} from "../Constants";
+import FullMeet from "../elements/meets/FullMeet";
+import FullMeetPage from "../meet/FullMeetPage";
+import SettingsPage from "../mainComponents/profile/SettingsPage";
 
 
 function Navigation(props) {
@@ -44,11 +47,21 @@ function Navigation(props) {
                     <Tab.Screen name={'Home'} component={HomePage}/>
                     <Tab.Screen name={'Search'} component={SearchPage}/>
                     <Tab.Screen name={'Create'}
-                                component={CreateNavigation}
+                                component={CreateRootPage}
                     />
                     <Tab.Screen name={'Chats'} component={ChatsPage}/>
                     <Tab.Screen name={'Profile'} component={ProfilePage}/>
                     <Tab.Screen name={'LoginTabNav'} component={StackNavigation}
+                                options={{
+                                    tabBarVisible: false,
+                                    tabBarButton: () => null
+                                }}/>
+                    <Tab.Screen name={'FullMeet'} component={FullMeetPage}
+                                options={{
+                                    tabBarVisible: false,
+                                    tabBarButton: () => null
+                                }}/>
+                    <Tab.Screen name={'Settings'} component={SettingsPage}
                                 options={{
                                     tabBarVisible: false,
                                     tabBarButton: () => null
@@ -117,12 +130,12 @@ function Navigation(props) {
     }
 
 
-    const {token, login, logout, userId, ready} = useAuth();
+    const {token, login, logout, user, ready} = useAuth();
     const isAuthenticated = !!token;
 
     return (
         <AuthContext.Provider value={{
-            token, login, logout, userId, isAuthenticated
+            token, login, logout, user, isAuthenticated
         }}>
             <NavigationContainer>
                 <StackNavigation/>

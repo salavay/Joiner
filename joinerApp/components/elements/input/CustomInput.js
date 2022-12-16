@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, TextInput, StyleSheet, Text} from 'react-native'
+import {StyleSheet, Text, TextInput, View} from 'react-native'
 
 function CustomInput({placeholder, label, style, onChange, name, multiline = false, ...inputProps}) {
     const [text, setText] = useState(null);

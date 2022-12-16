@@ -1,30 +1,49 @@
-import React from 'react';
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ImageBackground, Pressable, StyleSheet, Text, View} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import Avatar from "../avatar/Avatar";
-import MapPinSVG from '../../../assets/svg/MapPin.svg';
 import PeopleSVG from '../../../assets/svg/meet/People.svg';
 import PriceSVG from '../../../assets/svg/meet/Price.svg';
 import TimeSVG from '../../../assets/svg/meet/Time.svg';
 import {meetConstants, meetStyles} from "./MeetConstants";
 import Geolocation from "../geolocation/Geolocation";
+import {getDurationString} from "../../utils/time.utils";
+import {useHttp} from "../../../hooks/http.hook";
 
 
 function MeetCard({
+                      _id,
                       name,
-                      date,
+                      date, endDate,
                       segment,
                       capacity,
                       price,
                       photoUrl,
                       description,
                       isOffline,
-                      latitudeCoordinate,
-                      longitudeCoordinate,
+                      latitude,
+                      longitude,
+                      goingUsers,
+                      owner,
+                      navigation,
                       style
                   }) {
-    const imageExample = require('../../../assets/img/examples/jason-briscoe-7MAjXGUmaPw-unsplash.jpg');
-    const avatarExample = require('../../../assets/img/examples/prince-akachi-J1OScm_uHUQ-unsplash.jpg');
+
+    const meet = {
+        _id,
+        name,
+        date, endDate,
+        segment,
+        capacity,
+        price,
+        photoUrl,
+        description,
+        isOffline,
+        latitude,
+        longitude,
+        goingUsers,
+        owner
+    }
 
     const styles = StyleSheet.create({
         avatarWrapper: {
@@ -54,45 +73,66 @@ function MeetCard({
         }
     });
 
+    const openFullMeet = () => {
+        navigation.navigate('FullMeet', {
+            meet,
+            address
+        })
+    }
+
+    const {request} = useHttp();
+    const [address, setAddress] = useState(null);
+    useEffect(() => {
+        request({
+            url: `/api/location/getAddress?latitude=${latitude}&longitude=${longitude}`,
+            method: 'get'
+        }).then(r => {
+            setAddress(r.address_components[1].short_name + ' ' + r.address_components[0].short_name)
+        })
+    }, [])
+
+    const segmentColor = meetConstants.segmentsColorConfig.colors[segment];
+    const segmentColorGradient = meetConstants.segmentsColorConfig.gradients[segment];
+
     return (
-        <LinearGradient style={[style, meetStyles.container]} colors={meetConstants.segmentsColorConfig.gradients.sports}>
-            <View style={meetStyles.content}>
+        <LinearGradient style={[style, meetStyles.container]}
+                        colors={segmentColorGradient}>
+            <Pressable style={meetStyles.content} onPress={openFullMeet}>
                 <View style={meetStyles.contentMeetImageWrapper}>
                     <ImageBackground imageStyle={{borderRadius: 17}} style={meetStyles.contentMeetImage}
-                                     source={imageExample}>
+                                     source={{uri: photoUrl}}>
 
                     </ImageBackground>
                 </View>
                 <View style={meetStyles.contentMeetInfo}>
                     <View style={styles.avatarWrapper}>
-                        <Avatar username={'username_example'} image={avatarExample}/>
+                        <Avatar username={owner.username} imageUrl={owner.avatarUrl}/>
                     </View>
                     <Text style={styles.meetTitle}>
-                        name
+                        {name}
                     </Text>
                     <Text style={styles.meetDescription}>
-                        lalala nice info thank you very much for reading
+                        {description}
                     </Text>
                     <View style={meetStyles.additionalInfoWrapper}>
                         <View style={meetStyles.additionalInfoItem}>
                             <PeopleSVG {...meetStyles.additionalInfoIcon}/>
-                            <Text style={meetStyles.additionalInfoText}>9-12</Text>
+                            <Text style={meetStyles.additionalInfoText}>{capacity}</Text>
                         </View>
                         <View style={meetStyles.additionalInfoItem}>
                             <PriceSVG {...meetStyles.additionalInfoIcon}/>
-                            <Text style={meetStyles.additionalInfoText}>Free</Text>
+                            <Text style={meetStyles.additionalInfoText}>{price}</Text>
                         </View>
                         <View style={meetStyles.additionalInfoItem}>
                             <TimeSVG {...meetStyles.additionalInfoIcon}/>
-                            <Text style={meetStyles.additionalInfoText}>2h</Text>
+                            <Text style={meetStyles.additionalInfoText}>{getDurationString(date, endDate)}</Text>
                         </View>
                     </View>
-                    <Geolocation geo={'Veni Simplon-Orient-Express'}/>
+                    <Geolocation geo={address}
+                                 pinColor={segmentColor}/>
                 </View>
-            </View>
-            <View style={styles.segmentWrapper}>
-
-            </View>
+            </Pressable>
+            <View style={meetStyles.segmentWrapper}></View>
         </LinearGradient>
     );
 }

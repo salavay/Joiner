@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {View, Text, StyleSheet} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import CustomInput from "../../elements/input/CustomInput";
 import CustomButton from "../../elements/button/CustomButton";
 import {AuthContext} from "../../../context/AuthContext";
@@ -31,15 +31,19 @@ function RegisterPage({navigation}) {
         <View style={styles.container}>
             <Text style={styles.title}>Register</Text>
             <CustomInput style={styles.input}
-                         placeholder={"Some text"} label={'Username'}
+                         placeholder={"Your name"} label={'Name'}
+                         onChange={changeHandler} name={'name'}
+            />
+            <CustomInput style={styles.input}
+                         placeholder={"username"} label={'Username'}
                          onChange={changeHandler} name={'username'}
             />
             <CustomInput style={styles.input}
-                         placeholder={"Some text"} label={'Email'}
+                         placeholder={"email"} label={'Email'}
                          onChange={changeHandler} name={'email'}
             />
             <CustomInput style={styles.input}
-                         placeholder={"Some text"} label={'Password'} secureTextEntry={true}
+                         placeholder={"password"} label={'Password'} secureTextEntry={true}
                          onChange={changeHandler} name={'password'}/>
             <CustomButton backgroundColor={'#000000'}
                           text={'Register'}

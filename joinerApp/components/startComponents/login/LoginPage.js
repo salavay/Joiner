@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {View, StyleSheet, Text} from 'react-native'
+import {StyleSheet, Text, View} from 'react-native'
 import CustomInput from "../../elements/input/CustomInput";
 import CustomButton from "../../elements/button/CustomButton";
 import {AuthContext} from "../../../context/AuthContext";
@@ -8,6 +8,7 @@ import {useHttp} from "../../../hooks/http.hook";
 function LoginPage({navigation}) {
 
     const auth = useContext(AuthContext);
+    const [logging, setLogging] = useState(false);
     const {loading, request} = useHttp();
     const [form, setForm] = useState({userNameOrEmail: '', password: ''});
 
@@ -16,13 +17,14 @@ function LoginPage({navigation}) {
     }
 
     const loginHandler = async () => {
+        setLogging(true);
         try {
             const data = await request({
                 url: '/api/auth/login',
                 method: 'POST',
                 body: {...form}
             });
-            auth.login(data.token, data.userId);
+            await auth.login(data.token, data.user);
             navigation.navigate('HomeStackNav');
         } catch (e) {
         }
@@ -43,6 +45,7 @@ function LoginPage({navigation}) {
                           color={'#FFFFFF'}
                           onPress={loginHandler}
                           activeOpacity={0.8}
+                          loading={logging}
             />
         </View>
     );

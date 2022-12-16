@@ -1,5 +1,7 @@
 {
   "port": 5000,
   "mongoUri": "",
-  "jwtSecret": "jwtSecret"
+  "jwtSecret": "",
+  "GCLOUD_STORAGE_BUCKET": "",
+  "GOOGLE_MAPS_API_KEY": ""
 }

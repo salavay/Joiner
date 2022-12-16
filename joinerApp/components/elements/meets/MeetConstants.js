@@ -6,10 +6,30 @@ export const meetConstants = {
     containerRadius: 16,
     segmentsColorConfig: {
         gradients: {
-            sports: theme.colors.gradients.candy
+            default: theme.colors.gradients.candy,
+            sport: theme.colors.gradients.blue,
+            standup: theme.colors.gradients.violet,
+            hike: theme.colors.gradients.lemon,
+            party: theme.colors.gradients.lava,
+
+        },
+        colors: {
+            default: theme.colors.palette.black,
+            sport: theme.colors.palette.blue,
+            standup: theme.colors.palette.violet,
+            hike: theme.colors.palette.lemon,
+            party: theme.colors.palette.lava,
         }
     }
 }
+
+export const meetSegments = [
+    {value: 'default', name: 'Default'},
+    {value: 'sport', name: 'Sports'},
+    {value: 'standup', name: 'Stand-Up'},
+    {value: 'hike', name: 'Hike'},
+    {value: 'party', name: 'Party'},
+]
 
 
 export const meetStyles = StyleSheet.create({
@@ -65,13 +85,13 @@ export const meetStyles = StyleSheet.create({
     },
     additionalInfoText: {
         fontSize: 10
-    }
+    },
+    bottomButtonsWrapper: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        position: "absolute",
+        bottom: 20,
+        left: 15,
+        width: '100%'
+    },
 })
-
-export const meetSegments = [
-    {value: 'default', name: 'Default'},
-    {value: 'sport', name: 'Sports'},
-    {value: 'standup', name: 'Stand-Up'},
-    {value: 'hike', name: 'Hike'},
-    {value: 'party', name: 'Party'},
-]

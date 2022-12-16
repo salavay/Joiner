@@ -4,13 +4,12 @@ export const useHttp = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const serverUrl = 'http://192.168.31.18:5000';
+    const serverUrl = ''; // todo move to config
 
     const request = useCallback(async ({url, method = 'Get', body = null, headers = {}, isJson = true}) => {
         url = url.startsWith('/') ? serverUrl + url : url;
         setLoading(true);
         try {
-            console.log("In Request:", body, url);
             if (body && isJson) {
                 body = JSON.stringify(body);
                 headers['Content-Type'] = 'application/json';

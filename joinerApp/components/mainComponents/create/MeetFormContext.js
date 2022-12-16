@@ -1,7 +1,8 @@
 import {createContext} from "react";
+import {MeetForm} from "../../index";
 
 export const MeetFormContext = createContext({
-    meetForm: '',
+    meetForm: new MeetForm(),
     setMeetForm: '',
     onChangeHandler: '',
     image: '', setImage: '',
