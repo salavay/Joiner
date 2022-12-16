@@ -3,10 +3,10 @@ import {StyleSheet, Text, View} from "react-native";
 import React from "react";
 
 
-function Geolocation({geo, ...props}) {
+function Geolocation({geo, pinColor='black', ...props}) {
     return (
         <View style={styles.locationWrapper} {...props}>
-            <MapPinSVG width={12} height={12}/>
+            <MapPinSVG width={12} height={12} style={{color: pinColor}}/>
             <Text style={styles.location} numberOfLines={1} ellipsizeMode='tail'>{geo}</Text>
         </View>
     );

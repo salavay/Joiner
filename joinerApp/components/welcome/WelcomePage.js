@@ -1,12 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {LinearGradient} from "expo-linear-gradient";
 
 function WelcomePage(props) {
     return (
         <View style={{flex: 1}}>
             <LinearGradient style={styles.gradient}
-                            colors={['#FF7AFF','#C45DF4', '#942494']}
+                            colors={['#FF7AFF', '#C45DF4', '#942494']}
                             start={{
                                 x: 10,
                                 y: 20

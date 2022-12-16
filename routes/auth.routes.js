@@ -15,18 +15,14 @@ router.post('/register',
         check('password', 'Password should be 8 characters at least').isLength({min: 4})
     ],
     register);
-
 router.post('/login',
     [
         check('userNameOrEmail', 'Email is incorrect').exists(),
         check('password', 'Password should be exist').exists()
     ],
     login);
-
-router.get('/check', (req, res) => {
-    res.status(200).json({message: 'Checked!'});
-})
-
+router.post('/getCurrentUser', getCurrentUser)
+router.post('/verifyJWT', verifyJWT)
 
 async function register(req, res) {
     try {
@@ -39,7 +35,7 @@ async function register(req, res) {
             })
         }
 
-        const {email, password, username} = req.body;
+        const {email, password, username, name} = req.body;
 
         const candidateByName = await User.findOne({username});
 
@@ -54,7 +50,7 @@ async function register(req, res) {
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
-        const user = new User({username, email, password: hashedPassword});
+        const user = new User({name, username, email, password: hashedPassword});
 
         await user.save();
         console.log('REGISTERED')
@@ -93,15 +89,68 @@ async function login(req, res) {
 
         const token = jwt.sign(
             {userId: user.id},
-            config.get('jwtSecret'),
-            {expiresIn: '1h'}
+            config.get('jwtSecret'), {}
         );
 
-        res.json({token, userId: user.id});
+        res.json({token,user});
 
     } catch (e) {
         res.status(500).json({message: "Server error while login"});
     }
+}
+
+
+
+
+async function getCurrentUser(req, res) {
+    const {token} = req.body;
+    try {
+        const result = jwt.verify(token, config.get('jwtSecret'));
+        const user = await User.findById(result.userId)
+            .populate({
+                path: "hostingMeets", populate: {
+                    path: 'owner'
+                }
+            })
+            .populate({
+                    path: "goingToMeets",
+                    populate: {
+                        path: 'owner'
+                    }
+                }
+            )
+            .populate({
+                path: "attendedMeets",
+                populate: {
+                    path: 'owner'
+                }
+            });
+        res.json({
+            username: user.username,
+            name: user.name,
+            email: user.email,
+            status: user.status,
+            avatarUrl: user.avatarUrl,
+            hostingMeets: user.hostingMeets,
+            goingToMeets: user.goingToMeets,
+            attendedMeets: user.attendedMeets
+        })
+    } catch
+        (err) {
+        res.status(401);
+    }
+}
+
+async function verifyJWT(req, res) {
+    const token = req.body.token;
+    const userId = req.body.userId;
+    try {
+        const decoded = jwt.verify(token, config.get('jwtSecret'));
+    } catch (err) {
+        res.json(false);
+        return
+    }
+    res.json(true);
 }
 
 

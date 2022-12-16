@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, Text, StyleSheet} from 'react-native'
+import {ActivityIndicator, StyleSheet, Text, TouchableOpacity} from 'react-native'
 
 function CustomButton({
                           backgroundColor = '#000000',
@@ -8,6 +8,7 @@ function CustomButton({
                           activeOpacity = 0.8,
                           onPress,
                           outlined = false,
+                          loading = false,
                           style
                       }) {
     const styles = StyleSheet.create({
@@ -17,6 +18,7 @@ function CustomButton({
 
             alignItems: "center",
             justifyContent: "center",
+            flexDirection: 'row',
 
             borderRadius: 16,
 
@@ -40,6 +42,7 @@ function CustomButton({
             <Text style={{...styles.buttonText, color}}>
                 {text}
             </Text>
+            {loading && <ActivityIndicator/>}
         </TouchableOpacity>
     );
 }

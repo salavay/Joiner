@@ -1,7 +1,7 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {Video} from "expo-av";
 import {AuthContext} from "../../../context/AuthContext";
-import {Pressable, Touchable} from "react-native";
+import {Pressable} from "react-native";
 
 function IntroPage({navigation}) {
     const video = require('../../../assets/video/Intro.mp4')

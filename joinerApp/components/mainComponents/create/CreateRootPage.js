@@ -8,22 +8,24 @@ import PreviewMeetPage from "./PreviewMeetPage";
 import {meetSegments} from "../../elements/meets/MeetConstants";
 import SelectLocation from "./SelectLocation";
 import * as Location from "expo-location";
+import Moment from "moment";
 
 const Stack = createNativeStackNavigator();
 
-function CreateNavigation({navigation}) {
+function CreateRootPage({navigation}) {
 
     const formInit = {
         name: '',
-        date: new Date(),
-        segment: meetSegments[0],
+        date: Moment().toDate(),
+        endDate: Moment().add(1, 'hours').toDate(),
+        segment: meetSegments[0].value,
         capacity: -1,
         price: -1,
         photoUrl: '',
         description: '',
-        isOffline: false,
-        latitudeCoordinate: -1,
-        longitudeCoordinate: -1
+        isOffline: true,
+        latitude: -1,
+        longitude: -1
     }
 
     const [meetForm, setMeetForm] = useState(formInit);
@@ -77,4 +79,4 @@ function CreateNavigation({navigation}) {
     );
 }
 
-export default CreateNavigation;
+export default CreateRootPage;

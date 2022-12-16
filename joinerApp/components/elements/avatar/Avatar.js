@@ -1,18 +1,22 @@
 import React from 'react';
-import {View, Text, StyleSheet, ImageBackground} from 'react-native';
+import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 
-function Avatar({image, username}) {
+function Avatar({imageUrl, username}) {
+    const avatarExample = require('../../../assets/img/AvatarSample.png');
+
+
     return (
         <View style={styles.container}>
             <ImageBackground style={styles.imageContainer}
                              imageStyle={{borderRadius: 1000}}
-                             source={image}/>
+                             source={imageUrl ? {uri: imageUrl} : avatarExample}/>
             <Text style={styles.username}>
                 {username}
             </Text>
         </View>
     );
 }
+
 export default Avatar;
 
 const styles = StyleSheet.create({
@@ -26,7 +30,7 @@ const styles = StyleSheet.create({
         marginRight: 10
     },
     username: {
-        fontSize: 11,
+        fontSize: 16,
         fontFamily: "Raleway_600SemiBold",
         fontWeight: "bold"
     }
